@@ -1,7 +1,7 @@
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main4 {
-    private static AtomicInteger counter= new AtomicInteger(0);
+    private static AtomicInteger counter = new AtomicInteger(0);
 
     public static void main(String[] args) {
         Task3 thread1= new Task3(1,1_000_001);
