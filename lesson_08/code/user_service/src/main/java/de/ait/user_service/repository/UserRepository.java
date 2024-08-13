@@ -7,5 +7,5 @@ import java.util.List;
 public interface UserRepository {
     List<User> findAll();
     User save (User entity);
-    User delete(Long id);
+    User delete(User entity);
 }

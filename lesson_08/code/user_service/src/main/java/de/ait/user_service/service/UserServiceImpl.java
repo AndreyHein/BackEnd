@@ -1,6 +1,7 @@
 package de.ait.user_service.service;
 
 import de.ait.user_service.entity.User;
+import de.ait.user_service.exeption.UserNotFoundException;
 import de.ait.user_service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,12 +29,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-        return repository
-                .findAll()
+        return getAll()
                 .stream()
                 .filter(user -> user.getId().equals(id))
-                .findAny()
-                .get();
+                .findAny().orElseThrow(()-> new UserNotFoundException("User not found with id " + id));
     }
 
     @Override
@@ -43,6 +42,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User delete(Long id) {
-        return repository.delete(id);
+        User user = getUserById(id);
+        if (user != null) {
+            return repository.delete(user);
+        } else {
+            return null;
+        }
     }
 }

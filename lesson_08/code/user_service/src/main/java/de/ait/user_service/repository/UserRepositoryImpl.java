@@ -33,7 +33,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User delete(Long id) {
-        return null;
+    public User delete(User entity) {
+        list.remove(entity);
+        return entity;
     }
 }

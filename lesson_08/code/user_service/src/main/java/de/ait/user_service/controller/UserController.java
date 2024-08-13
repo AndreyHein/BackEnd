@@ -37,4 +37,9 @@ public class UserController {
         service.save(user);
         return user;
     }
+
+    @DeleteMapping("/users/{id}")
+    public User delete(@PathVariable Long id) {
+        return service.delete(id);
+    }
 }
