@@ -1,7 +1,7 @@
 package de.ait.user_service.service;
 
 import de.ait.user_service.entity.User;
-import de.ait.user_service.exeption.UserNotFoundException;
+import de.ait.user_service.exception.UserNotFoundException;
 import de.ait.user_service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

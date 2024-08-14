@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface AutoRepository {
     List<Auto> findAll();
-    Auto save(Auto auto);
-    Auto delete(Long id);
+    Auto save(Auto entity);
+    Auto delete(Auto entity);
 }

@@ -1,17 +1,15 @@
 package de.home.auto_service.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @ToString
+@Setter
 public class Auto {
-    @Setter
     private Long id;
     private String brand;
     private String model;

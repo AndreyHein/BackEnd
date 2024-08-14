@@ -1,6 +1,7 @@
 package de.home.auto_service.service;
 
 import de.home.auto_service.entity.Auto;
+import de.home.auto_service.exception.AutoNotFoundException;
 import de.home.auto_service.reposirory.AutoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,8 +33,7 @@ public class AutoServiceImpl implements AutoService {
         return getAll()
                 .stream()
                 .filter(auto -> auto.getId().equals(id))
-                .findAny()
-                .get();
+                .findAny().orElseThrow(() -> new AutoNotFoundException("Auto not found with id " + id));
     }
 
     @Override
@@ -43,6 +43,10 @@ public class AutoServiceImpl implements AutoService {
 
     @Override
     public Auto delete(Long id) {
-        return repository.delete(id);
+        Auto auto = getById(id);
+        if (auto != null) {
+            return repository.delete(auto);
+        }
+        return null;
     }
 }
