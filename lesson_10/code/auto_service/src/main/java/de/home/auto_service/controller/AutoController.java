@@ -29,7 +29,7 @@ public class AutoController {
 
     @PostMapping("/autos")
     public Auto addAuto(@RequestBody Auto auto) {
-    return service.save(auto);
+    return service.create(auto);
     }
 
     @DeleteMapping("/autos/{id}")
@@ -39,6 +39,6 @@ public class AutoController {
 
     @PutMapping("/autos")
     public Auto updateAuto(@RequestBody Auto auto) {
-        return service.save(auto);
+        return service.create(auto);
     }
 }

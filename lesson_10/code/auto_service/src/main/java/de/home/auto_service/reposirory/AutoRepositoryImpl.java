@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class AutoRepositoryImpl implements AutoRepository {
 
     List<Auto> list = new ArrayList<>(List.of(
@@ -37,13 +38,17 @@ public class AutoRepositoryImpl implements AutoRepository {
     }
 
     @Override
-    public Auto delete(Auto auto) {
-        list.remove(auto);
-        return auto;
+    public Auto delete(Long id) {
+        Auto entity = findById(id);
+        list.remove(entity);
+        return entity;
     }
 
     @Override
     public Auto findById(Long id) {
-        return null;
+        return list.stream()
+                .filter(a -> a.getId().equals(id))
+                .findAny()
+                .orElse(null);
     }
 }
