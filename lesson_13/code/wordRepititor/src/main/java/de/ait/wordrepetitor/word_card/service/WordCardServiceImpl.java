@@ -1,0 +1,32 @@
+package de.ait.wordrepetitor.word_card.service;
+
+import de.ait.wordrepetitor.word_card.dto.WordCardRequestDTO;
+import de.ait.wordrepetitor.word_card.dto.WordCardResponseDTO;
+import de.ait.wordrepetitor.word_card.entity.WordCard;
+import de.ait.wordrepetitor.word_card.repository.WordCardRepository;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+@Service
+public class WordCardServiceImpl implements WordCardService {
+    private WordCardRepository repository;
+    private final ModelMapper mapper;
+
+    @Override
+    public List<WordCardResponseDTO> getAllWordCards() {
+        return repository.findAll().stream()
+                .map(w_c -> mapper.map(w_c, WordCardResponseDTO.class))
+                .toList();
+    }
+
+    @Override
+    public WordCardResponseDTO createWordCard(WordCardRequestDTO dto) {
+        WordCard entity = mapper.map(dto, WordCard.class);
+        entity = repository.save(entity);
+        return mapper.map(entity, WordCardResponseDTO.class);
+    }
+}
