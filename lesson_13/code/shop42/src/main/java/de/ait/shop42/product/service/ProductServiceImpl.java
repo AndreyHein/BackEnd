@@ -1,9 +1,11 @@
 package de.ait.shop42.product.service;
 
+import de.ait.shop42.exception.ProductNotFoundException;
 import de.ait.shop42.product.dto.ProductRequestDTO;
 import de.ait.shop42.product.dto.ProductResponseDTO;
 import de.ait.shop42.product.entity.Product;
 import de.ait.shop42.product.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -31,5 +33,35 @@ public class ProductServiceImpl implements ProductService {
         entity = repository.save(entity);
 
         return mapper.map(entity, ProductResponseDTO.class);    // entity --> dto
+    }
+
+    @Override
+    @Transactional
+    public ProductResponseDTO updateProduct(Long id, ProductRequestDTO dto) {
+        Product entity = mapper.map(dto, Product.class);
+        entity.setId(id);
+        entity = repository.save(entity);
+        return mapper.map(entity, ProductResponseDTO.class);
+    }
+
+    @Override
+    @Transactional
+    public ProductResponseDTO setActiveStatus(Long id, boolean active) {
+        String exceptionMsg = String.format("Change active status fail. Product id %d not found", id);
+        Product productEntity = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(exceptionMsg));
+        productEntity.setActive(active);
+        return mapper.map(productEntity, ProductResponseDTO.class);
+    }
+
+    @Override
+    public List<ProductResponseDTO> getProducts(Boolean active) {
+        if (active == null) {
+            return getAllProducts();
+        } else {
+            List<Product> productByActive = repository.findByActive(active);
+            return productByActive.stream()
+                    .map(p -> mapper.map(p, ProductResponseDTO.class))
+                    .toList();
+        }
     }
 }

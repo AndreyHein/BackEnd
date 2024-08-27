@@ -9,4 +9,10 @@ public interface ProductService {
     List<ProductResponseDTO> getAllProducts();
     ProductResponseDTO createNewProduct(ProductRequestDTO dto);
 
+    ProductResponseDTO updateProduct(Long id, ProductRequestDTO dto);
+
+    ProductResponseDTO setActiveStatus(Long id, boolean active);
+
+    List<ProductResponseDTO> getProducts(Boolean active);
 }
+
