@@ -8,4 +8,6 @@ import java.util.List;
 public interface WordCardService {
     List<WordCardResponseDTO> getAllWordCards();
     WordCardResponseDTO createWordCard(WordCardRequestDTO dto);
+    WordCardResponseDTO updateWordCard(Long id, WordCardRequestDTO dto);
+    List<WordCardResponseDTO> getWordCards(String word);
 }
