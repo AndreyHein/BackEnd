@@ -19,6 +19,12 @@ public class WordCardServiceImpl implements WordCardService {
     private final ModelMapper mapper;
 
     @Override
+    public WordCardResponseDTO getById(Long id) {
+        WordCard entity = repository.findById(id).orElseThrow(() -> new WordCardNotFoundException(String.format("Card with id %d not found", id)));
+        return mapper.map(entity, WordCardResponseDTO.class);
+    }
+
+    @Override
     public List<WordCardResponseDTO> getAllWordCards() {
         return repository.findAll().stream()
                 .map(w_c -> mapper.map(w_c, WordCardResponseDTO.class))

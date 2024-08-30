@@ -10,20 +10,25 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class WordCardController {
     private final WordCardService service;
 
-    @GetMapping("/api/word_cards")
+    @GetMapping("/word_cards/{id}")
+    public WordCardResponseDTO getCardById(@PathVariable Long id) {
+        return service.getById(id);
+    }
+    @GetMapping("/word_cards")
     public List<WordCardResponseDTO> getWordCards(@RequestParam(name = "word", required = false) String word) {
         return service.getWordCards(word);
     }
 
-    @PostMapping("/api/word_cards")
+    @PostMapping("/word_cards")
     public WordCardResponseDTO createWordCard(@RequestBody WordCardRequestDTO dto) {
         return service.createWordCard(dto);
     }
 
-    @PutMapping("/api/word_cards/{id}")
+    @PutMapping("/word_cards/{id}")
     public WordCardResponseDTO updateWordCard(@PathVariable(name = "id") Long id, @RequestBody WordCardRequestDTO dto) {
         return service.updateWordCard(id, dto);
     }

@@ -10,4 +10,5 @@ public interface WordCardService {
     WordCardResponseDTO createWordCard(WordCardRequestDTO dto);
     WordCardResponseDTO updateWordCard(Long id, WordCardRequestDTO dto);
     List<WordCardResponseDTO> getWordCards(String word);
+    WordCardResponseDTO getById(Long id);
 }

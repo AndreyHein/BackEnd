@@ -64,4 +64,14 @@ public class ProductServiceImpl implements ProductService {
                     .toList();
         }
     }
+
+    @Override
+    public ProductResponseDTO getById(Long id) {
+        return mapper.map(findProductById(id), ProductResponseDTO.class);
+    }
+
+    @Override
+    public Product findProductById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ProductNotFoundException(String.format("Product id %d not found", id)));
+    }
 }
