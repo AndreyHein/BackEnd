@@ -1,5 +1,6 @@
 package de.ait.wordrepetitor.word_card.service;
 
+import de.ait.wordrepetitor.card_group.entity.CardGroup;
 import de.ait.wordrepetitor.exception.WordCardNotFoundException;
 import de.ait.wordrepetitor.word_card.dto.WordCardRequestDTO;
 import de.ait.wordrepetitor.word_card.dto.WordCardResponseDTO;
@@ -11,22 +12,23 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class WordCardServiceImpl implements WordCardService {
-    private final WordCardRepository repository;
+    private final WordCardRepository cardRepository;
     private final ModelMapper mapper;
 
     @Override
     public WordCardResponseDTO getById(Long id) {
-        WordCard entity = repository.findById(id).orElseThrow(() -> new WordCardNotFoundException(String.format("Card with id %d not found", id)));
+        WordCard entity = cardRepository.findById(id).orElseThrow(() -> new WordCardNotFoundException(String.format("Card with id %d not found", id)));
         return mapper.map(entity, WordCardResponseDTO.class);
     }
 
     @Override
     public List<WordCardResponseDTO> getAllWordCards() {
-        return repository.findAll().stream()
+        return cardRepository.findAll().stream()
                 .map(w_c -> mapper.map(w_c, WordCardResponseDTO.class))
                 .toList();
     }
@@ -34,7 +36,7 @@ public class WordCardServiceImpl implements WordCardService {
     @Override
     public WordCardResponseDTO createWordCard(WordCardRequestDTO dto) {
         WordCard entity = mapper.map(dto, WordCard.class);
-        entity = repository.save(entity);
+        entity = cardRepository.save(entity);
         return mapper.map(entity, WordCardResponseDTO.class);
     }
 
@@ -43,7 +45,7 @@ public class WordCardServiceImpl implements WordCardService {
     public WordCardResponseDTO updateWordCard(Long id, WordCardRequestDTO dto) {
         WordCard entity = mapper.map(dto, WordCard.class);
         entity.setId(id);
-        entity = repository.save(entity);
+        entity = cardRepository.save(entity);
         return mapper.map(entity, WordCardResponseDTO.class);
     }
 
@@ -52,11 +54,18 @@ public class WordCardServiceImpl implements WordCardService {
         if (word == null || word.isEmpty()) {
             return getAllWordCards();
         } else {
-            WordCard entity = repository.findByWord(word);
+            WordCard entity = cardRepository.findByWord(word);
             if (entity == null) {
                 throw  new WordCardNotFoundException(String.format("Word = '%s' not found", word));
             }
             return List.of(mapper.map(entity, WordCardResponseDTO.class));
         }
+    }
+
+    @Override
+    public List<CardGroup> getGroupsByCardId(Long cardId) {
+        WordCard card = cardRepository.findById(cardId).orElseThrow(() -> new WordCardNotFoundException("WordCard with id " + cardId + " not found"));
+        return card.getGroups().stream()
+                .toList();
     }
 }
