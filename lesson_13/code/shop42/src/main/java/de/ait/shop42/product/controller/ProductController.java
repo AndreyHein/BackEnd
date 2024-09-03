@@ -18,6 +18,11 @@ public class ProductController {
         return service.getProducts(active);
     };
 
+    @GetMapping("/products/{id}")
+    public ProductResponseDTO getProductById(@PathVariable (name = "id") Long id) {
+        return service.getById(id);
+    }
+
     @PostMapping("/products")
     public ProductResponseDTO createProduct(@RequestBody ProductRequestDTO dto) {
 

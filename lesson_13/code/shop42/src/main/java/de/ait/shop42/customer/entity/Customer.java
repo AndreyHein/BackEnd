@@ -1,4 +1,4 @@
-package de.ait.shop42.customer;
+package de.ait.shop42.customer.entity;
 
 import de.ait.shop42.cart.entity.Cart;
 import jakarta.persistence.*;

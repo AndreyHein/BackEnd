@@ -1,7 +1,7 @@
 package de.ait.shop42.customer.service;
 
 import de.ait.shop42.cart.entity.Cart;
-import de.ait.shop42.customer.Customer;
+import de.ait.shop42.customer.entity.Customer;
 import de.ait.shop42.customer.dto.CustomerRequestDto;
 import de.ait.shop42.customer.dto.CustomerResponseDto;
 import de.ait.shop42.customer.repository.CustomerRepository;

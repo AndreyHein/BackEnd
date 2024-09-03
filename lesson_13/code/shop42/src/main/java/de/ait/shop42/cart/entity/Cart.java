@@ -1,6 +1,6 @@
 package de.ait.shop42.cart.entity;
 
-import de.ait.shop42.customer.Customer;
+import de.ait.shop42.customer.entity.Customer;
 import de.ait.shop42.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

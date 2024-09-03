@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductResponseDTO setActiveStatus(Long id, boolean active) {
-        String exceptionMsg = String.format("Change active status fail. Product id %d not found", id);
+        String exceptionMsg = String.format("Change active status fail. ", id);
         Product productEntity = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(exceptionMsg));
         productEntity.setActive(active);
         return mapper.map(productEntity, ProductResponseDTO.class);

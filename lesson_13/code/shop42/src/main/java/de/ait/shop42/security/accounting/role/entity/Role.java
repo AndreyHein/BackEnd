@@ -1,4 +1,4 @@
-package de.ait.shop42.security.accounting;
+package de.ait.shop42.security.accounting.role.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
