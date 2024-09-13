@@ -3,6 +3,7 @@ package de.ait.shop42.security.accounting.user.controller;
 import de.ait.shop42.security.accounting.user.dto.UserRequestDto;
 import de.ait.shop42.security.accounting.user.dto.UserResponseDto;
 import de.ait.shop42.security.accounting.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class UserController {
 
     private final UserService service;
     @PostMapping("/users")
-    public UserResponseDto createNewUser(@RequestBody UserRequestDto dto) {
+    public UserResponseDto createNewUser(@Valid @RequestBody UserRequestDto dto) {
         return service.createNewUser(dto);
     }
 

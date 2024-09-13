@@ -1,5 +1,6 @@
 package de.ait.shop42.product.service;
 
+import de.ait.shop42.exception.ApiError;
 import de.ait.shop42.exception.ProductNotFoundException;
 import de.ait.shop42.product.dto.ProductRequestDTO;
 import de.ait.shop42.product.dto.ProductResponseDTO;
@@ -8,6 +9,7 @@ import de.ait.shop42.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -72,6 +74,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findProductById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new ProductNotFoundException(String.format("Product id %d not found", id)));
+        return repository.findById(id).orElseThrow(() -> new ProductNotFoundException(new ApiError(String.format("Product id %d not found", id), HttpStatus.NOT_FOUND)));
     }
 }
